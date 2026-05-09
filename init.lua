@@ -187,6 +187,33 @@ vim.keymap.set('n', '<leader>tw', function()
     end
 end, { desc = '[W]rap text' })
 
+-- DNF Keymaps
+-- Get the DNF advisory info (changelogs) for highlighted text in Visual mode
+vim.keymap.set("x", "<leader>da", function()
+  vim.cmd([[normal! "zy]])
+  local pkg = vim.trim(vim.fn.getreg("z"))
+  local out = vim.fn.systemlist("dnf advisory info --contains-pkgs=" .. vim.fn.shellescape(pkg))
+
+  vim.cmd("new")
+  vim.bo.buftype = "nofile"
+  vim.bo.bufhidden = "wipe"
+  vim.bo.swapfile = false
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, out)
+end, { silent = true, desc = "Show [D]NF [a]dvisories for selected package" })
+
+-- Get the DNF info for highlighted text in Visual mode
+vim.keymap.set("x", "<leader>di", function()
+  vim.cmd([[normal! "zy]])
+  local pkg = vim.trim(vim.fn.getreg("z"))
+  local out = vim.fn.systemlist("dnf info " .. vim.fn.shellescape(pkg))
+
+  vim.cmd("new")
+  vim.bo.buftype = "nofile"
+  vim.bo.bufhidden = "wipe"
+  vim.bo.swapfile = false
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, out)
+end, { silent = true, desc = "Show [D]NF [i]nfo for selected package" })
+
 --[[
 NOTE:
 =====================================================================
@@ -309,6 +336,7 @@ require('lazy').setup({
         { '<leader>s', group = '[S]earch', mode = { 'n', 'v' }, icon = "" },
         { '<leader>t', group = '[T]oggle', icon = "" },
         { '<leader>a', group = '[A]gents (Sidekick)', icon = "" },
+        { '<leader>d', group = '[D]NF commands', mode = { 'v' }, icon = "" },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
         { 'gr', group = 'LSP Actions', mode = { 'n' } },
       },
