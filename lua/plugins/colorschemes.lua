@@ -12,6 +12,7 @@ NOTE:
 vim.api.nvim_create_autocmd("ColorScheme", {
   callback = function()
     vim.api.nvim_set_hl(0, "WinSeparator", { link = "FloatBorder" })
+    vim.api.nvim_set_hl(0, "WhichKeyIcon", { link = "String" })
   end,
 })
 

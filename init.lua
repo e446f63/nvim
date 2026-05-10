@@ -154,7 +154,7 @@ NOTE:
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Open diagnostic in quickfix list
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'quickfix list' })
 
 -- Exit terminal mode in the builtin terminal with <ESC><ESC>
 -- Otherwise, you normally need to press <C-\><C-n>.
@@ -174,7 +174,7 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Toggle spell checking
-vim.keymap.set('n', '<leader>ts', '<cmd>lua vim.o.spell = not vim.o.spell<CR>', { desc = '[S]pellchecking' })
+vim.keymap.set('n', '<leader>ts', '<cmd>lua vim.o.spell = not vim.o.spell<CR>', { desc = 'spellchecking' })
 
 -- Toggle text wrap, which is mainly for markdown tables.
 vim.keymap.set('n', '<leader>tw', function()
@@ -185,7 +185,7 @@ vim.keymap.set('n', '<leader>tw', function()
     else
         print("Text Wrap: Disabled")
     end
-end, { desc = '[W]rap text' })
+end, { desc = 'wrap text' })
 
 -- DNF Keymaps
 -- Get the DNF advisory info (changelogs) for highlighted text in Visual mode
@@ -199,7 +199,7 @@ vim.keymap.set("x", "<leader>da", function()
   vim.bo.bufhidden = "wipe"
   vim.bo.swapfile = false
   vim.api.nvim_buf_set_lines(0, 0, -1, false, out)
-end, { silent = true, desc = "Show [D]NF [a]dvisories for selected package" })
+end, { silent = true, desc = "advisories for selected package" })
 
 -- Get the DNF info for highlighted text in Visual mode
 vim.keymap.set("x", "<leader>di", function()
@@ -212,7 +212,7 @@ vim.keymap.set("x", "<leader>di", function()
   vim.bo.bufhidden = "wipe"
   vim.bo.swapfile = false
   vim.api.nvim_buf_set_lines(0, 0, -1, false, out)
-end, { silent = true, desc = "Show [D]NF [i]nfo for selected package" })
+end, { silent = true, desc = "info for selected package" })
 
 --[[
 NOTE:
@@ -329,15 +329,35 @@ require('lazy').setup({
     opts = {
       -- delay between pressing a key and opening which-key (milliseconds)
       delay = 0,
-      icons = { mappings = vim.g.have_nerd_font },
+      icons = {
+        mappings = vim.g.have_nerd_font,
+        colors = false,
+        rules = {
+          { pattern = "command", icon = " ", color = "blue" },
+          { pattern = "cli", icon = " ", color = "blue" },
+          { pattern = "help", icon = "󰋖 ", color = "blue" },
+          { pattern = "keymaps", icon = "󰌌 ", color = "blue" },
+          { pattern = "resume", icon = "󰜉 ", color = "blue" },
+          { pattern = "wrap", icon = "󰴐 ", color = "blue" },
+          { pattern = "spell", icon = "󰓆 ", color = "blue" },
+          { pattern = "send file", icon = "󰈪 ", color = "blue" },
+          { pattern = "send this", icon = " ", color = "blue" },
+          { pattern = "send visual", icon = "󱣿 ", color = "blue" },
+          { pattern = "prompt", icon = " ", color = "blue" },
+          { pattern = "goto", icon = "󰅩 ", color = "blue" },
+          { pattern = "lsp", icon = "󰅩 ", color = "blue" },
+          { pattern = "rename", icon = " ", color = "blue" },
+        },
+      },
 
       -- Document existing key chains
       spec = {
-        { '<leader>s', group = '[S]earch', mode = { 'n', 'v' }, icon = "" },
-        { '<leader>t', group = '[T]oggle', icon = "" },
-        { '<leader>a', group = '[A]gents (Sidekick)', icon = "" },
-        { '<leader>d', group = '[D]NF commands', mode = { 'v' }, icon = "" },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
+        { '<leader>s', group = 'telescope search', mode = { 'n', 'v' } },
+        { '<leader>t', group = 'toggle' },
+        { '<leader>a', group = 'AI (Sidekick)', icon = ' ' },
+        { '<leader>d', group = 'dnf commands', mode = { 'v' }, icon = ' ' },
+        { '<leader>tn', desc = 'neo-tree' },
+        { '<leader>h', group = 'git hunk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
         { 'gr', group = 'LSP Actions', mode = { 'n' } },
       },
     },
@@ -374,8 +394,7 @@ require('lazy').setup({
   -- 'kickstart.plugins.debug',
   -- 'kickstart.plugins.lint',
   -- 'kickstart.plugins.autopairs',
-  -- adds gitsigns recommended keymaps
-  -- 'kickstart.plugins.gitsigns',
+  -- 'kickstart.plugins.gitsigns', -- (installed) adds gitsigns recommended keymaps
 
   -- Import all Lazy plugins from 'lua/plugins/'
   { import = 'plugins' },

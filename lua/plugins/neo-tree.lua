@@ -14,7 +14,7 @@ return {
   keys = {
     { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
     -- My custom keymap for the hell of it
-    { '<leader>tn', ':Neotree toggle show<CR>', desc = '[N]eo-tree' },
+    { '<leader>tn', ':Neotree toggle show<CR>', desc = '[n]eo-tree' },
   },
   opts = {
     close_if_last_window = true,
