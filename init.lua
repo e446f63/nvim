@@ -214,6 +214,13 @@ vim.keymap.set("x", "<leader>di", function()
   vim.api.nvim_buf_set_lines(0, 0, -1, false, out)
 end, { silent = true, desc = "info for selected package" })
 
+-- Sidekick / Copilot / NES Keymaps
+-- Jump or Apply the next edit suggestion from Sidekick's NES (Next Edit Suggestion) system.
+--  See `lua/plugins/sidekick.lua` for more information on Sidekick and NES.
+-- In Insert mode, this is handled by Blink with the `<Tab>` key, so this is for Normal mode.
+-- <leader>aa also works, but <leader><Tab> is quicker.
+vim.keymap.set( "n", "<leader><Tab>", function() require("sidekick").nes_jump_or_apply() end, { desc = "goto / apply NES" })
+
 --[[
 NOTE:
 =====================================================================

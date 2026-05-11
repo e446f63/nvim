@@ -74,6 +74,28 @@ function M.setup()
       if client and client:supports_method('textDocument/inlayHint', event.buf) then
         map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'inlay hints')
       end
+
+      -- Enable :help lsp-inline-completion to receive Copilot suggestions
+      -- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#copilot
+      -- Note this version is modified to fit into this file instead of a standalone function.
+      if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, event.buf) then
+        vim.lsp.inline_completion.enable(true, { bufnr = event.buf })
+        map('<leader>ai', function() vim.lsp.inline_completion.enable(not vim.lsp.inline_completion.is_enabled { bufnr = event.buf }) end, 'Toggle Inline Completion')
+
+        -- Commenting out because 'accept inline completion' is now handled by <Tab> in `lua/plugins/blink.lua`
+        -- vim.keymap.set(
+        --   'i',
+        --   '<C-F>',
+        --   vim.lsp.inline_completion.get,
+        --   { desc = 'LSP: accept inline completion', buffer = event.buf }
+        -- )
+        vim.keymap.set(
+          'i',
+          '<C-G>',
+          vim.lsp.inline_completion.select,
+          { desc = 'LSP: switch inline completion', buffer = event.buf }
+        )
+      end
     end
   })
 

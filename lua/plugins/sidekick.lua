@@ -20,6 +20,8 @@ return {
     },
     keys = {
       -- {
+      --  Commented out because Blink handles <Tab> behavior for completions and snippets.
+      --  See `lua/plugins/blink.lua` for the configuration.
       --   "<tab>",
       --   function()
       --     -- if there is a next edit, jump to it, otherwise apply it if any
@@ -31,13 +33,27 @@ return {
       --   desc = "Goto/Apply Next Edit Suggestion",
       -- },
       {
+        -- Toggle NES on/off.
+        "<leader>an",
+        function() require("sidekick.nes").toggle() end,
+        desc = "Sidekick Toggle NES",
+        mode = { "n" },
+      },
+      {
+        -- Blink handles this with `<Tab>` in Insert mode; this is for Normal mode.
+        "<leader>aa",
+          -- if there is a next edit, jump to it, otherwise apply it if any
+        function() require("sidekick").nes_jump_or_apply() end,
+        desc = "Goto / Apply NES",
+      },
+      {
         "<c-.>",
         function() require("sidekick.cli").focus() end,
         desc = "Sidekick Focus",
         mode = { "n", "t", "i", "x" },
       },
       {
-        "<leader>aa",
+        "<leader>ac",
         function() require("sidekick.cli").toggle() end,
         desc = "Sidekick Toggle CLI",
       },
@@ -77,11 +93,12 @@ return {
         desc = "Sidekick Select Prompt",
       },
       -- Example of a keybinding to open Claude directly
-      {
-        "<leader>ac",
-        function() require("sidekick.cli").toggle({ name = "claude", focus = true }) end,
-        desc = "Sidekick Toggle Claude",
-      },
+      -- I don't currently use Claude
+      -- {
+      --   "<leader>ac",
+      --   function() require("sidekick.cli").toggle({ name = "claude", focus = true }) end,
+      --   desc = "Sidekick Toggle Claude",
+      -- },
     },
   }
 }

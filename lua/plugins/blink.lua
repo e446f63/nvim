@@ -61,7 +61,21 @@ return {
         -- <c-k>: Toggle signature help
         --
         -- See :h blink-cmp-config-keymap for defining your own keymap
-        preset = 'super-tab',
+        preset = 'enter',
+
+        -- Let Blink.cmp handle the `<tab>` key, which has a lot of different behaviors depending on the context.
+        -- See "Integrate <Tab> in insert mode with blink.cmp" section of Sidekick's README for more details:
+        -- https://github.com/folke/sidekick.nvim
+        ['<Tab>'] = {
+          "snippet_forward",
+          function() -- sidekick next edit suggestion
+            return require("sidekick").nes_jump_or_apply()
+          end,
+          function() -- if you are using Neovim's native inline completions
+            return vim.lsp.inline_completion.get()
+          end,
+          "fallback",
+        },
 
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
