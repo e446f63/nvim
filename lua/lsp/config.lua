@@ -70,7 +70,7 @@ function M.setup()
       -- The following code creates a keymap to toggle inlay hints in your
       -- code, if the language server you are using supports them
       --
-      -- This may be unwanted, since they displace some of your code
+      -- inlay hints may be unwanted, since they displace some of your code
       if client and client:supports_method('textDocument/inlayHint', event.buf) then
         map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'inlay hints')
       end
@@ -79,7 +79,8 @@ function M.setup()
       -- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#copilot
       -- Note this version is modified to fit into this file instead of a standalone function.
       if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, event.buf) then
-        vim.lsp.inline_completion.enable(true, { bufnr = event.buf })
+        -- By default, inline completion is disabled because it can be a bit noisy, but can be toggled with the keymap below.
+        -- vim.lsp.inline_completion.enable(true, { bufnr = event.buf })  -- Uncomment to enable by default.
         map('<leader>ai', function() vim.lsp.inline_completion.enable(not vim.lsp.inline_completion.is_enabled { bufnr = event.buf }) end, 'Toggle Inline Completion')
 
         -- Commenting out because 'accept inline completion' is now handled by <Tab> in `lua/plugins/blink.lua`
@@ -245,7 +246,6 @@ function M.setup()
   -- other tools, you can run
   --    :Mason
   --
-  -- You can press `g?` for help in this menu.
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
     -- 'stylua' is a formatter, not an LSP server, so it goes here.
