@@ -59,32 +59,6 @@ When changing config, prioritize checking:
 - If an LSP suddenly fails after path moves, runtime reshuffles, or config-directory renames, inspect Mason wrapper scripts before assuming the Lua config is wrong.
 - In particular, check `~/.local/share/nvim/mason/bin/*` launchers for stale absolute paths from older `stdpath('data')` locations.
 
-## Maintenance Reminders
-
-- Starting on **2026-05-10** and any time after that when working in this repo, remind the user to clean up the old `0.11` backup artifacts if the new setup has remained stable.
-
-### Old 0.11 Cleanup Checklist
-
-After the new setup has been stable long enough, purge these old backup components:
-
-- `~/.config/nvim-0.11-backup`
-- `~/.local/share/nvim-0.11-backup`
-- `~/.local/state/nvim-0.11-backup`
-- `~/.cache/nvim-0.11-backup`
-
-Also review whether these old transitional Neovim binary/install artifacts are still needed:
-
-- `~/.local/bin/nvim-0.12`
-- `~/.local/bin/nvim` if it is only a compatibility symlink and you want a different long-term naming scheme
-- `~/.local/opt/nvim-linux-x86_64`
-- the `nvim` shell alias in `~/.bashrc.d/my.bashrc` that points to the transitional `0.12` binary path
-
-Before deleting the old runtime backups, optionally preserve anything still personally useful:
-
-- custom spell files from `site/spell`
-- old ShaDa/history if it still matters
-- old logs only if needed for troubleshooting
-
 ## Key References
 
 - `UPSTREAM_MAPPING.md`: maps upstream Kickstart sections into this repo

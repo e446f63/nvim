@@ -13,6 +13,14 @@ return {
   {
     dir = '/home/eric/dev/openWRT',
     name = 'openwrt.nvim',
+    -- List commands so Lazy know when to load module.
+    cmd = {
+      'OpenWrtTestConnection',
+      'OpenWrtDashboard',
+      'OpenWrtUci',
+      'OpenWrtUciTerminal',
+      'OpenWrtUciReload',
+    },
     config = function()
       require('openwrt').setup {
         ssh_host = '192.168.31.1',
@@ -80,9 +88,9 @@ return {
       opts.sources.providers.openwrt = {
         name = 'openwrt',
         module = 'openwrt.integrations.uci_terminal_blink',
-        -- enabled = function()
-        --   return vim.bo.filetype == 'openwrt-uci-terminal' or vim.bo.filetype == 'uci'
-        -- end,
+        enabled = function()
+          return vim.bo.filetype == 'openwrt-uci-terminal' or vim.bo.filetype == 'uci'
+        end,
       }
     end,
   },
