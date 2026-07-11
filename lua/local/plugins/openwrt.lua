@@ -5,15 +5,15 @@ NOTE:
 =====================================================================
 --]]
 
-if not vim.uv.fs_stat '/home/eric/dev/openWRT' then
-  return {}
-end
-
 return {
   {
     dir = '/home/eric/dev/openWRT',
     name = 'openwrt.nvim',
-    -- List commands so Lazy know when to load module.
+    -- Lazy's `cond` setting to conditionally enable this plugin.
+    cond = function()
+        return vim.uv.fs_stat('/home/eric/dev/openWRT') ~= nil
+    end,
+    -- List commands so Lazy knows when to load module.
     cmd = {
       'OpenWrtTestConnection',
       'OpenWrtDashboard',
