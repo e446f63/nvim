@@ -23,7 +23,7 @@ function M.setup()
       -- for LSP related items. It sets the mode, buffer and description for us each time.
       local map = function(keys, func, desc, mode)
         mode = mode or 'n'
-        vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = '' .. desc })
+        vim.keymap.set(mode, keys, func, { buf = event.buf, desc = '' .. desc })
       end
 
       -- Rename the variable under your cursor.
@@ -88,13 +88,13 @@ function M.setup()
         --   'i',
         --   '<C-F>',
         --   vim.lsp.inline_completion.get,
-        --   { desc = 'LSP: accept inline completion', buffer = event.buf }
+        --   { desc = 'LSP: accept inline completion', buf = event.buf }
         -- )
         vim.keymap.set(
           'i',
           '<C-G>',
           vim.lsp.inline_completion.select,
-          { desc = 'LSP: switch inline completion', buffer = event.buf }
+          { desc = 'LSP: switch inline completion', buf = event.buf }
         )
       end
     end
