@@ -62,17 +62,21 @@ function M.setup()
           group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
           callback = function(event2)
             vim.lsp.buf.clear_references()
-            vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+            vim.api.nvim_cxear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
           end,
         })
       end
 
-      -- The following code creates a keymap to toggle inlay hints in your
-      -- code, if the language server you are using supports them
+      -- The following code creates keymaps to toggle inlay hints and codelens, if the language server you are using supports them
       --
-      -- inlay hints may be unwanted, since they displace some of your code
+      -- enable inlay hints with a keymap to toggle on and off
       if client and client:supports_method('textDocument/inlayHint', event.buf) then
         map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'inlay hints')
+      end
+      --
+      -- enable codelens with a keymap to toggle on and off
+      if client and client:supports_method('textDocument/codeLens', event.buf) then
+        map('<leader>tl', function () vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled { bufnr = event.buf }) end, 'codelens')
       end
 
       -- Enable :help lsp-inline-completion to receive Copilot suggestions
