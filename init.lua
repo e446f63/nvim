@@ -47,6 +47,10 @@ NOTE:
 =====================================================================
 --]]
 
+-- Enable Neovim’s built-in Lua module cache
+-- Neovim can cache compiled Lua chunks and load them faster on later startup.
+vim.loader.enable()
+
 -- Set <space> as the leader key
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
