@@ -23,7 +23,7 @@ function M.setup()
       -- for LSP related items. It sets the mode, buffer and description for us each time.
       local map = function(keys, func, desc, mode)
         mode = mode or 'n'
-        vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = '' .. desc })
+        vim.keymap.set(mode, keys, func, { buf = event.buf, desc = '' .. desc })
       end
 
       -- Rename the variable under your cursor.
@@ -67,12 +67,16 @@ function M.setup()
         })
       end
 
-      -- The following code creates a keymap to toggle inlay hints in your
-      -- code, if the language server you are using supports them
+      -- The following code creates keymaps to toggle inlay hints and codelens, if the language server you are using supports them
       --
-      -- inlay hints may be unwanted, since they displace some of your code
+      -- enable inlay hints with a keymap to toggle on and off
       if client and client:supports_method('textDocument/inlayHint', event.buf) then
         map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'inlay hints')
+      end
+      --
+      -- enable codelens with a keymap to toggle on and off
+      if client and client:supports_method('textDocument/codeLens', event.buf) then
+        map('<leader>tl', function () vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled { bufnr = event.buf }) end, 'codelens')
       end
 
       -- Enable :help lsp-inline-completion to receive Copilot suggestions
@@ -88,13 +92,13 @@ function M.setup()
         --   'i',
         --   '<C-F>',
         --   vim.lsp.inline_completion.get,
-        --   { desc = 'LSP: accept inline completion', buffer = event.buf }
+        --   { desc = 'LSP: accept inline completion', buf = event.buf }
         -- )
         vim.keymap.set(
           'i',
           '<C-G>',
           vim.lsp.inline_completion.select,
-          { desc = 'LSP: switch inline completion', buffer = event.buf }
+          { desc = 'LSP: switch inline completion', buf = event.buf }
         )
       end
     end
