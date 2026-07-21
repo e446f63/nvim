@@ -28,84 +28,78 @@ return {
         -- Change inactive window statusline for better separation and darker blue.
         custom_ayu_dark.inactive.a.bg = '#283d52'
         custom_ayu_dark.inactive.a.fg = '#36a3d9'
-        custom_ayu_dark.inactive.a.gui = 'bold'
         custom_ayu_dark.inactive.b.fg = '#36a3d9'
         custom_ayu_dark.inactive.c.bg = '#283d52'
         custom_ayu_dark.inactive.c.fg = '#36a3d9'
+        -- Use regular text instead of bold in section a (and z)
+        custom_ayu_dark.inactive.a.gui = ''
 
         -- Change normal mode statusline to blue
         custom_ayu_dark.normal.c.bg = '#2f93c4'
         custom_ayu_dark.normal.c.fg = '#14191f'
-        custom_ayu_dark.normal.b.fg = '#36a3d9'
+
+        -- Update colors when mode changes
+        for mode, colors in pairs(custom_ayu_dark) do
+          if type(colors) == "table" and mode ~= 'inactive' then
+            -- Set c colors to match a always, commented out for now.
+            -- Need these lines because most modes don't have c or x defined.
+            -- colors.c = colors.c or {}
+            -- colors.x = colors.x or {}
+            -- colors.c.bg = colors.a.bg
+            -- colors.c.fg = colors.a.fg
+            -- colors.x.fg = colors.c.fg
+            -- colors.x.bg = colors.c.bg
+            --
+            -- Set b text color to match a's background
+            colors.b.fg = colors.a.bg
+            -- Use regular text instead of bold in section a (and z)
+            colors.a.gui = ''
+          end
+        end
 
         lualine_theme = custom_ayu_dark
 
-      -- NOTE: If active colorscheme is set to 'ayu' in init.lua, 
-      -- customize inactive statusline and ayu_dark theme
+      -- NOTE: If active colorscheme is set to 'shatur-ayu-dark' in init.lua, 
+      -- use lualine's regular 'ayu' theme.
       elseif vim.g.active_colorscheme == 'shatur-ayu-dark' then
         lualine_theme = require('lualine.themes.ayu')
         -- optional Shatur-specific tweaks
 
       end
 
-      -- TODO: Someday, update colors of other modes for more consistency. See default theme file above.
+      -- Define custom statusline sections once; apply to both active and inactive below.
+      local sections = {
+        lualine_a = { 'mode' },
+        -- if no git branch info, insert placeholder text to keep statusline pretty.
+        lualine_b = {
+          {
+            'branch',
+            fmt = function(str)
+              if str == '' or str == nil then
+                return 'no git repo'
+              end
+              return str
+            end,
+          },
+          'diff',
+          'diagnostics',
+        },
+        lualine_c = { { 'filename', path = 4 } },
+        -- show buffer numbers, not names
+        lualine_x = { { 'buffers', mode = 3 } },
+        -- set `colored = true` to use the 'filetype' icons brand color instead
+        lualine_y = { 'fileformat', { 'filetype', colored = false }, 'progress' },
+        lualine_z = { 'location' },
+      }
 
       require('lualine').setup {
-
-        -- NOTE: Change this when changing themes!
-        -- If using 'ayu', use ayu_dark with above customizations,
-        -- if using 'shatur-ayu-dark', use lualine's regular 'ayu' theme;
-        -- otherwise, us 'auto'.
         options = { theme = lualine_theme },
 
-        -- Custom statusline for active sessions.
-        sections = {
-          lualine_a = { 'mode' },
-          -- if no git branch info, insert placeholder text to keep statusline pretty.
-          lualine_b = {
-            {
-              'branch',
-              fmt = function(str)
-                if str == '' or str == nil then
-                  return 'no git repo'
-                end
-                return str
-              end,
-            },
-            'diff',
-            'diagnostics',
-          },
-          lualine_c = { { 'filename', path = 4 } },
-          -- show buffer numbers, not names
-          lualine_x = { { 'buffers', mode = 3 } },
-          lualine_y = { 'fileformat', 'filetype', 'progress' },
-          lualine_z = { 'location' },
-        },
+        -- Use custom statusline sections.
+        sections = sections,
 
-        -- Custom statusline for inactive sessions.
-        -- Same as active, except bg colors.
-        inactive_sections = {
-          lualine_a = { 'mode' },
-          -- if no git branch info, insert placeholder text to keep statusline pretty.
-          lualine_b = {
-            {
-              'branch',
-              fmt = function(str)
-                if str == '' or str == nil then
-                  return 'no git repo'
-                end
-                return str
-              end,
-            },
-            'diff',
-            'diagnostics',
-          },
-          lualine_c = { 'filename' },
-          -- show buffer numbers, not names
-          lualine_x = { { 'buffers', mode = 3 } },
-          lualine_y = { 'fileformat', 'filetype', 'progress' },
-          lualine_z = { 'location' },
-        },
+        -- Use same sections as active.
+        inactive_sections = sections,
       }
     end,
   },
