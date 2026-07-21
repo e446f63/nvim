@@ -5,13 +5,18 @@ NOTE:
 =====================================================================
 --]]
 
-return {
+-- check if the openWRT path exists
+local openwrt_path = '/home/eric/dev/openWRT'
+local has_openwrt = vim.uv.fs_stat(openwrt_path) ~= nil
+
+-- Create table with openwrt.nvim config
+local specs = {
   {
-    dir = '/home/eric/dev/openWRT',
+    dir = openwrt_path,
     name = 'openwrt.nvim',
     -- Lazy's `cond` setting to conditionally enable this plugin.
     cond = function()
-        return vim.uv.fs_stat('/home/eric/dev/openWRT') ~= nil
+      return has_openwrt
     end,
     -- List commands so Lazy knows when to load module.
     cmd = {
@@ -38,8 +43,11 @@ return {
       },
     },
   },
+}
 
-  { -- NOTE: Local Blink augmentation for OpenWRT
+-- Conditionally append the Blink config extension
+if has_openwrt then
+  table.insert(specs, {
     'saghen/blink.cmp',
     opts = function(_, opts)
       -- This local module should only layer OpenWRT-specific behavior on top of the
@@ -61,12 +69,6 @@ return {
             return { ' ', '\n', '\t' }
           end,
         },
-
-        -- Other settings specifically for OpenWRT autocomplete.
-        -- menu = {
-        --   max_height = 6, -- Limit height to keep it compact
-        --   direction_priority = { 'n', 's' }, -- Open upward (above cursor) first
-        -- },
       })
 
       opts.sources = opts.sources or {}
@@ -79,12 +81,6 @@ return {
         table.insert(opts.sources.default, 'openwrt')
       end
 
-      -- Tried to get UCI autocomplete to work with blink, but failed miserably so far.
-      -- opts.sources.providers.openwrt_uci = {
-      --   name = 'OpenWrt UCI',
-      --   module = 'openwrt.integrations.uci_terminal_blink',
-      -- }
-
       opts.sources.providers.openwrt = {
         name = 'openwrt',
         module = 'openwrt.integrations.uci_terminal_blink',
@@ -93,5 +89,8 @@ return {
         end,
       }
     end,
-  },
-}
+  })
+end
+
+-- Return the fully constructed table
+return specs
