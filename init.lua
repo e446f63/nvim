@@ -82,7 +82,7 @@ NOTE:
 
 --See `:help vim.o`. For more options, you can see `:help option-list`
 
--- Give pop-ups (like <S-k>) borders
+-- Give pop-ups (like <S>-K) borders
 vim.o.winborder = 'single'
 
 -- Make relative line numbers default
