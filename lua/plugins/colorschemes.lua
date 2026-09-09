@@ -26,14 +26,15 @@ return {
       ---@diagnostic disable-next-line: missing-fields
       require('tokyonight').setup {
         styles = {
-          comments = { italic = false }, -- Disable italics in comments
+          comments = { italic = false }, -- default is true
+          keywords = { italic = false }, -- default is true
         },
-        -- Darken theme's background (same bg as my Ayu config).
-        on_colors = function(c)
-          c.bg = '#0D1017'
-          c.bg_dark = '#0A0C12'
-          c.bg_sidebar = '#0D1017'
-          c.bg_float = '#0D1017'
+        -- Darken the background (same bg as my Ayu config).
+        on_colors = function(colors)
+          colors.bg = '#0D1017'
+          colors.bg_dark = '#0A0C12'
+          colors.bg_sidebar = '#0D1017'
+          colors.bg_float = '#0D1017'
         end,
       }
 
