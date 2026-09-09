@@ -68,7 +68,7 @@ vim.loader.enable()
 -- Set primary colorscheme. Options: 'tokyonight-night', 'ayu', or 'default'.
 --   also 'shatur-ayu-dark' if uncommented.
 -- See `lua/plugins/colorschemes.lua`
-vim.g.active_colorscheme = 'tokyonight-night'
+vim.g.active_colorscheme = 'ayu'
 
 -- Set statusline. Options: 'lualine', 'mini.statusline', or 'default'.
 vim.g.active_statusline = 'lualine'
@@ -81,6 +81,9 @@ NOTE:
 --]]
 
 --See `:help vim.o`. For more options, you can see `:help option-list`
+
+-- One statusline for all windows
+vim.o.laststatus = 3
 
 -- Give pop-ups (like <S>-K) borders
 vim.o.winborder = 'single'
