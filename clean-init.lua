@@ -2,6 +2,8 @@
 Clean 'init.lua' with minimal QoL settings for fast file editing.
 In Linux, this is aliased to `vim` in .bashrc (`alias vim='nvim -u clean-init.lua'`)
 --]]
+--
+-- TODO: Reorg this config to support when opened in vscode. 
 
 ---------- INITAL SETTINGS -----------------------------------------------------
 
