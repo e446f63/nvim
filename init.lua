@@ -296,27 +296,25 @@ require('lazy').setup {
   -- 'kickstart.plugins.lint',
   -- 'kickstart.plugins.autopairs',
 
-  -- Import all Lazy plugins from 'lua/plugins/'
-  { import = 'plugins' },
+  -- Define Lazy's plugin specs
+  spec = {
+    -- Import all Lazy plugins from 'lua/plugins/'
+    { import = 'plugins' },
 
-  -- Check for 'lua/local/plugins/' path; if exists, import those plugins too.
-  -- These are for machine-specific plugins
-  unpack(vim.uv.fs_stat(vim.fn.stdpath 'config' .. '/lua/local/plugins') and {
-    { import = 'local.plugins' },
-  } or {}),
+    -- Check for 'lua/local/plugins/' path for local-only plugins; if exists, import those too.
+    unpack(vim.uv.fs_stat(vim.fn.stdpath 'config' .. '/lua/local/plugins') and {
+      { import = 'local.plugins' },
+    } or {}),
+  },
 
-  -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
-  -- Or use telescope!
-  -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
-  -- you can continue same window with `<space>sr` which resumes last telescope search
-  -- },
   ---@diagnostic disable-line: missing-fields
   rocks = {
     enabled = false,
   },
+
   ui = {
-    -- If you are using a Nerd Font: set icons to an empty table which will use the
-    -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
+    -- If using a Nerd Font, set icons to an empty table which will use the default
+    -- lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
     icons = vim.g.have_nerd_font and {} or {
       cmd = '⌘',
       config = '🛠',
