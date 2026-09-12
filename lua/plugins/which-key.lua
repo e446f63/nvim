@@ -36,10 +36,10 @@ return {
     spec = {
       { '<leader>s', group = 'telescope search', mode = { 'n', 'v' } },
       { '<leader>t', group = 'toggle' },
-      { '<leader>a', group = 'AI (Sidekick)', icon = ' ' },
-      { '<leader>d', group = 'dnf commands', mode = { 'v' }, icon = ' ' },
+      { '<leader>a', group = 'AI (sidekick)', mode = { 'n', 't', 'i', 'x' }, icon = ' ' },
+      { '<leader>d', group = 'dnf commands', icon = ' ' },
       { '<leader>h', group = 'git hunk', mode = { 'n', 'v' } },
-      { 'gr', group = 'LSP Actions', mode = { 'n' } },
+      { 'gr', group = 'LSP actions', mode = { 'n' } },
     },
   },
 }

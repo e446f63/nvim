@@ -215,9 +215,9 @@ vim.keymap.set('n', '<leader>ts', function()
   vim.o.spell = not vim.o.spell
   -- Print a message to show current state
   if vim.o.spell then
-    print 'Spellcheck: Enabled'
+    print 'spellcheck enabled'
   else
-    print 'Spellcheck: Disabled'
+    print 'spellcheck disabled'
   end
 end, { desc = 'spellcheck' })
 
@@ -226,9 +226,9 @@ vim.keymap.set('n', '<leader>tw', function()
   vim.wo.wrap = not vim.wo.wrap
   -- Print a message to show current state
   if vim.wo.wrap then
-    print 'Text Wrap: Enabled'
+    print 'text wrap enabled'
   else
-    print 'Text Wrap: Disabled'
+    print 'text wrap disabled'
   end
 end, { desc = 'wrap text' })
 
@@ -237,9 +237,9 @@ vim.keymap.set('n', '<leader>td', function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
   -- Print a message to show current state
   if vim.diagnostic.is_enabled() then
-    print 'Diagnostics: Enabled'
+    print 'diagnostics enabled'
   else
-    print 'Diagnostics: Disabled'
+    print 'diagnostics disabled'
   end
 end, { desc = 'diagnostics' })
 
@@ -248,7 +248,7 @@ end, { desc = 'diagnostics' })
 --  See `lua/plugins/sidekick.lua` for more information on Sidekick and NES.
 -- In Insert mode, this is handled by Blink with the `<Tab>` key, so this is for Normal mode.
 -- <leader>aa also works, but <leader><Tab> is quicker.
-vim.keymap.set('n', '<leader><Tab>', function() require('sidekick').nes_jump_or_apply() end, { desc = 'goto / apply NES' })
+vim.keymap.set('n', '<leader><Tab>', function() require('sidekick').nes_jump_or_apply() end, { desc = 'goto/apply NES' })
 
 -- DNF Keymaps
 require 'dnf-keymaps'

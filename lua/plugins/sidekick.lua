@@ -10,28 +10,32 @@ return {
     'folke/sidekick.nvim',
     opts = {
       -- add any options here
+      nes = { enabled = false }, -- Disable Copilot NES by default
       cli = {
         -- Commented out since I don't use muxers
         -- mux = {
         --   backend = "zellij",
         --   enabled = true,
         -- },
+        -- preferred picker for selecting files
+        ---@alias sidekick.picker "snacks"|"telescope"|"fzf-lua"
+        picker = "telescope", ---@type sidekick.picker
       },
     },
     keys = {
-      -- {
+      {
       --  Commented out because Blink handles <Tab> behavior for completions and snippets.
       --  See `lua/plugins/blink.lua` for the configuration.
-      --   "<tab>",
-      --   function()
-      --     -- if there is a next edit, jump to it, otherwise apply it if any
-      --     if not require("sidekick").nes_jump_or_apply() then
-      --       return "<Tab>" -- fallback to normal tab
-      --     end
-      --   end,
-      --   expr = true,
-      --   desc = "Goto/Apply Next Edit Suggestion",
-      -- },
+        "<tab>",
+        function()
+          -- if there is a next edit, jump to it, otherwise apply it if any
+          if not require("sidekick").nes_jump_or_apply() then
+            return "<Tab>" -- fallback to normal tab
+          end
+        end,
+        expr = true,
+        desc = "Goto/Apply NES",
+      },
       {
         -- Toggle NES on/off.
         '<leader>an',
@@ -47,7 +51,7 @@ return {
         '<leader>aa',
         -- if there is a next edit, jump to it, otherwise apply it if any
         function() require('sidekick').nes_jump_or_apply() end,
-        desc = 'Goto / Apply NES',
+        desc = 'Goto/Apply NES',
       },
       {
         '<c-.>',
