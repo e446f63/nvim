@@ -60,7 +60,7 @@ return {
       -- Toggles
       map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = 'git show [b]lame line' })
       ---- This was mapped to '<leader>tw' for '[w]ord', which conflicted with my [t]oggle [w]rapping.
-      map('n', '<leader>td', gitsigns.toggle_word_diff, { desc = 'git intra-line word [d]iff' })
+      map('n', '<leader>ti', gitsigns.toggle_word_diff, { desc = 'git [i]ntra-line word diff' })
 
       -- Text object
       map({ 'o', 'x' }, 'ih', gitsigns.select_hunk)

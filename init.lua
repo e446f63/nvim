@@ -211,7 +211,6 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- Toggle spell-checking
 --  Simple syntax:
 --  vim.keymap.set('n', '<leader>ts', '<cmd>lua vim.o.spell = not vim.o.spell<CR>', { desc = 'spellchecking' })
---
 vim.keymap.set('n', '<leader>ts', function()
   vim.o.spell = not vim.o.spell
   -- Print a message to show current state
@@ -232,6 +231,17 @@ vim.keymap.set('n', '<leader>tw', function()
     print 'Text Wrap: Disabled'
   end
 end, { desc = 'wrap text' })
+
+-- Toggle diagnostics
+vim.keymap.set('n', '<leader>td', function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+  -- Print a message to show current state
+  if vim.diagnostic.is_enabled() then
+    print 'Diagnostics: Enabled'
+  else
+    print 'Diagnostics: Disabled'
+  end
+end, { desc = 'diagnostics' })
 
 -- Sidekick / Copilot / NES Keymaps
 -- Jump or Apply the next edit suggestion from Sidekick's NES (Next Edit Suggestion) system.
