@@ -62,7 +62,7 @@ vim.o.updatetime = 250
 vim.o.number = true
 vim.o.relativenumber = true
 
-vim.o.mouse = 'n'
+vim.o.mouse = ''
 
 vim.o.undofile = true
 
@@ -142,6 +142,17 @@ require('which-key').setup {
 
 -- File the sidebar will use: 'blank.txt' | 'lines.txt' | 'text.txt'
 local sidebar_filename = 'blank.txt'
+
+-- If sidebar is the last window, close it
+vim.api.nvim_create_autocmd('WinEnter', {
+  callback = function()
+    if vim.fn.winnr('$') == 1 -- confirm only 1 window exists
+      and vim.api.nvim_buf_get_name(0):match(sidebar_filename .. '$')
+      then
+        vim.cmd.quit()
+      end
+    end,
+  })
 
 -- Create the sidebar
 local function create_sidebar()
