@@ -1,30 +1,61 @@
 --[[
 Clean 'init.lua' with minimal QoL settings for fast file editing.
 In Linux, this is aliased to `vim` in .bashrc (`alias vim='nvim -u clean-init.lua'`)
---]]
---
--- TODO: Reorg this config to support when opened in vscode. 
 
----------- INITAL SETTINGS -----------------------------------------------------
+'GLOBAL' items should work when running in VS Code; all others come after an 'EJECT'
+  block which returns early if VS Code environment is detected.
+--]]
+
+---------- GLOBAL SETTINGS -----------------------------------------------------
+
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
+
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+vim.o.timeoutlen = 300
+
+vim.o.inccommand = 'split'
+
+---------- GLOBAL AUTOCOMMANDS -------------------------------------------------
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking text',
+  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
+  callback = function() vim.hl.on_yank() end,
+})
+
+---------- GLOBAL KEYMAPS ------------------------------------------------------
+
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+---------- VS CODE EJECT -------------------------------------------------------
+-- If running in VS Code, configure custom keymaps and stop here.
+if vim.g.vscode then
+  local vscode = require 'vscode'
+
+  vim.keymap.set('n', '<C-h>', function() vscode.action 'workbench.action.navigateLeft' end)
+  vim.keymap.set('n', '<C-l>', function() vscode.action 'workbench.action.navigateRight' end)
+  vim.keymap.set('n', '<C-j>', function() vscode.action 'workbench.action.navigateDown' end)
+  vim.keymap.set('n', '<C-k>', function() vscode.action 'workbench.action.navigateUp' end)
+
+  return
+end
+
+---------- SETTINGS ------------------------------------------------------------
 
 vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3 -- tree view
 vim.g.netrw_winsize = 25
 
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 vim.g.have_nerd_font = true
 
--- TODO: Integrate vscode-only code into the top of this file (single-file config)
--- Commented out until vscode-only blocks are integrated into this file
--- otherwise, this will throw an error if opened in vscode because mini plugins
--- don't exist yet.
---
--- if vim.g.vscode then
---   require 'vscode-init'
---   return
--- end
+vim.o.breakindent = true
+
+vim.o.updatetime = 250
 
 ---------- OPTIONS -------------------------------------------------------------
 
@@ -33,23 +64,10 @@ vim.o.relativenumber = true
 
 vim.o.mouse = 'n'
 
-vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
-
-vim.o.breakindent = true
-
 vim.o.undofile = true
-
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
-vim.o.updatetime = 250
-
-vim.o.timeoutlen = 300
 
 vim.o.splitright = true
 vim.o.splitbelow = true
-
-vim.o.inccommand = 'split'
 
 vim.o.cursorline = false
 
@@ -98,12 +116,6 @@ end
 vim.api.nvim_set_hl(0, 'Normal', { bg = '#000000', update = true })
 
 ---------- AUTOCOMMANDS --------------------------------------------------------
-
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking or deleting text',
-  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
-  callback = function() vim.hl.on_yank() end,
-})
 
 -- When 'clean-init.lua' is saved, auto-sync it to the Windows Neovim 'init.lua'
 -- `pcall` to silently fail when running on Windows where the script doesn't exist
@@ -173,8 +185,6 @@ vim.api.nvim_create_autocmd('VimEnter', {
 })
 
 ---------- KEYMAPS -------------------------------------------------------------
-
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'quickfix list' })
 
