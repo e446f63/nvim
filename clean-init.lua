@@ -134,6 +134,7 @@ require('which-key').setup {
   spec = {
     -- Numbered list of current buffers
     { '<leader>b', group = 'buffers', expand = function() return require('which-key.extras').expand.buf() end },
+    { '<leader>p', group = 'plugins' },
   },
 }
 
@@ -211,5 +212,9 @@ vim.keymap.set('n', '<leader>n', function() vim.cmd.edit(vim.fn.stdpath 'config'
 
 -- Toggle the sidebar
 vim.keymap.set('n', '<leader>s', function() create_sidebar() end, { desc = 'toggle sidebar' })
+
+-- Package management
+vim.keymap.set('n', '<leader>pl', function() vim.pack.update(nil, { offline = true }) end, { desc = 'list installed' })
+vim.keymap.set('n', '<leader>pu', function() vim.pack.update() end, { desc = 'update all' })
 
 -- vim: ts=2 sts=-1 sw=2 et
