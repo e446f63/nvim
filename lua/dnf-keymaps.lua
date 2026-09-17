@@ -7,7 +7,7 @@ NOTE:
 -- Keymaps for getting DNF package info and correct changlogs within Neovim terminal
 -- No `return {}` needed since this code simply executes to register the keymaps
 
-vim.api.nvim_create_user_command('DNFcheck', 'terminal dnf chk --refresh; bash -i', {nargs=0})
+vim.api.nvim_create_user_command('DNFcheck', 'terminal dnf check-upgrade --refresh; bash -i', {nargs=0})
 
 local dnf_buf
 
