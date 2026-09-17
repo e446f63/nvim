@@ -7,6 +7,8 @@ NOTE:
 -- Keymaps for getting DNF package info and correct changlogs within Neovim terminal
 -- No `return {}` needed since this code simply executes to register the keymaps
 
+vim.api.nvim_create_user_command('DNFcheck', 'terminal dnf chk --refresh; bash -i', {nargs=0})
+
 local dnf_buf
 
 -- Create scratch buffer
@@ -39,7 +41,6 @@ vim.api.nvim_create_autocmd('TermOpen', {
     -- Only add the keymaps if we're in a 'terminal' buffer
     -- (redundant since 'TermOpen' in the event type)
     if vim.bo[buf].buftype == 'terminal' then
-
       -- Get the DNF advisories for package under the cursor
       vim.keymap.set('n', '<leader>da', function()
         vim.cmd [[normal! 0"zyt.]] -- yank package name *without* architecture to 'z' register
