@@ -189,6 +189,9 @@ NOTE:
 -- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- Make Control+Backspace in Insert mode work like Windows (delete word to the left)
+vim.keymap.set('i', '<C-BS>', '<Space><Esc>cb<Del>')
+
 -- Open diagnostic in location (aka quickfix) list
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'quickfix list' })
 
