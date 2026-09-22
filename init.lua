@@ -191,6 +191,8 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Make Control+Backspace in Insert mode work like Windows (delete word to the left)
 vim.keymap.set('i', '<C-BS>', '<Space><Esc>cb<Del>')
+-- Same as above, but make it work in Windows Neovim
+vim.keymap.set('i', '<C-h>', '<Space><Esc>cb<Del>')
 
 -- Open diagnostic in location (aka quickfix) list
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'quickfix list' })

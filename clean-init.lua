@@ -33,6 +33,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Make Control+Backspace in Insert mode work like Windows (delete word to the left)
 vim.keymap.set('i', '<C-BS>', '<Space><Esc>cb<Del>')
+-- Same as above, but make it work in Windows Neovim
+vim.keymap.set('i', '<C-h>', '<Space><Esc>cb<Del>')
 
 ---------- VS CODE EJECT -------------------------------------------------------
 -- If running in VS Code, configure custom keymaps and stop here.
