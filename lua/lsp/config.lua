@@ -154,15 +154,19 @@ function M.setup()
     gopls = {
       filetypes = { 'go', 'gomod', 'gowork' },
     },
+    -- Should probably remove 'pyright' at some point because it required Node.js, which I consider insecure.
+    ---- If so, prefer `ruff = {},` (for linting and formatting)
+    ---- and `jedi-language-server = {},` (for autocompletion and navigation)
     pyright = {},
     bashls = {},
-    copilot = {
-      settings = {
-        telemetry = {
-          telemetryLevel = 'none',
-        },
-      },
-    },
+    -- Removed because Copilot Language Server is no open source and somewhat shady.
+    -- copilot = {
+    --   settings = {
+    --     telemetry = {
+    --       telemetryLevel = 'none',
+    --     },
+    --   },
+    -- },
 
     -- Special Lua Config, as recommended by neovim help docs
     lua_ls = {
